@@ -22,21 +22,20 @@
 </template>
 
 <script>
-    export default{
-        data(){
+    export default {
+        data() {
             return {
                 name: '',
                 price: 0,
                 desc: ''
             }
         },
-        methods:{
-            sellArticle(){
+        methods: {
+            sellArticle() {
                 this.$chainList.sellArticle(
                     this.name,
                     this.desc,
-                    web3.toWei(this.price, 'ether'),
-                    {
+                    web3.toWei(this.price, 'ether'), {
                         from: web3.eth.coinbase
                     }
                 ).then(() => {
@@ -47,7 +46,10 @@
             }
         }
     }
+
 </script>
 
 <style scoped>
+
+
 </style>
