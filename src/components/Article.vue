@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="panel-footer text-right" v-if="eth.coinbase != article.seller && eth.coinbase != article.buyer">
-            <button class="btn btn-primary btn-sm" @click="buyArticle()" :disabled="buying">
+            <button class="btn btn-primary btn-sm" @click="buyArticle()" :disabled="article.buying">
                 Buy
             </button>
         </div>
@@ -29,7 +29,6 @@
 
 <script>
     import {
-        mapGetters,
         mapActions
     } from 'vuex';
     import * as types from '../store/types.js';
@@ -40,11 +39,13 @@
                 eth: web3.eth
             }
         },
+        props:{
+            article:{
+                required: true,
+                type: Object
+            }
+        },
         computed: {
-            ...mapGetters({
-                article: types.ARTICLE_GET_ARTICLE,
-                buying: types.ARTICLE_GET_BUYING
-            }),
             seller() {
                 return this.article.seller === this.eth.coinbase ? 'You' : this.article.seller;
             },
@@ -58,8 +59,8 @@
         methods: {
             buyArticle() {
                 const vm = this;
-                vm.$store.commit(types.ARTICLE_MUTATE_BUYING, true);
-                vm.$chainList.buyArticle({
+                vm.$store.commit(types.ARTICLE_MUTATE_BUYING, {id: this.article.id, buying: true});
+                vm.$chainList.buyArticle(this.article.id, {
                         from: web3.eth.coinbase,
                         value: web3.toWei(this.article.price, 'ether')
                     })

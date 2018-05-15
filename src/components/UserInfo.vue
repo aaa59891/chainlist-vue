@@ -31,7 +31,6 @@
                 immediate: true,
                 handler(newVal, oldVal){
                     this.$store.dispatch(types.ACCOUNT_ACT_GETETHER)
-                    this.$store.dispatch(types.ARTICLE_ACT_LOADARTICLE);
                 }
             }
         }

@@ -3,6 +3,7 @@ import App from './App.vue'
 import * as setup from './setup.js'
 import store from './store/index.js'
 import * as types from './store/types.js'
+import Article from './models/article.js'
 
 web3 = new Web3(setup.getProvider());
 
@@ -19,21 +20,30 @@ const app = new Vue({
 })
 
 function setChainListWatches(instance) {
-    instance.LogSellArticle({}, {}).watch((err, log) => {
+    instance.LogSellArticle().watch((err, log) => {
         if (err) {
             console.error(err);
             return;
         }
-        app.$store.dispatch(types.ARTICLE_ACT_LOADARTICLE)
+        const {args} = log
+        app.$store.commit(types.ARTICLE_MUTATE_ADD_ARTICLE, new Article(
+            args._id.toNumber(),
+            args._seller,
+            0x0,
+            args._name,
+            args._description,
+            web3.fromWei(args._price, 'ether').toNumber(),
+            false
+        ))
     });
 
-    instance.LogBuyArticle({}, {}).watch((err, log) => {
+    instance.LogBuyArticle({},{fromBlock:'latest', toBlock:'pending'}).watch((err, log) => {
         if (err) {
             console.error(err);
             return;
         }
-        app.$store.dispatch(types.ARTICLE_ACT_LOADARTICLE);
+        app.$store.commit(types.ARTICLE_MUTATE_REMOVE_ARTICLE, log.args._id)
         app.$store.dispatch(types.ACCOUNT_ACT_GETETHER);
-        app.$store.commit(types.ARTICLE_MUTATE_BUYING, false);
+        app.$store.commit(types.ARTICLE_MUTATE_BUYING, {id: log.args._id.toNumber(), buying:false});
     })
 }
