@@ -39,7 +39,7 @@ const actions = {
         try{
             const ins = await getChainListInstance()
             const sellIds = await ins.getSellArticleIds()
-            let articlesArr = await Promise.all(sellIds.map((id) => ins.articles(id)))
+            let articlesArr = await Promise.all(sellIds.map((id) => ins.articles(Number(id))))
             commit(types.ARTICLE_MUTATE_ARTICLES, articlesArr.reduce((pre, cur) => {
                 const article = new Article(
                     cur[0].toNumber(),
