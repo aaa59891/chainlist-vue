@@ -54,6 +54,7 @@ const actions = {
                 return pre
             }, {}))
         }catch(e){
+            console.error(e)
             throw e
         }
     }
