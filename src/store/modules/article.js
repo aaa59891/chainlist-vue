@@ -22,7 +22,7 @@ const mutations = {
     [types.ARTICLE_MUTATE_ADD_ARTICLE]: (state, article) => {
         const id = article.id
         if(!state.articles[id]){
-            state.articles = {...state.articles, id: article}
+            state.articles = {...state.articles, [id]: article}
         }
     },
     [types.ARTICLE_MUTATE_REMOVE_ARTICLE]: (state, id) => {
