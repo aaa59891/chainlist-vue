@@ -1,12 +1,12 @@
 const account = {
     getEtherByAccount(account){
-        return Math.round(web3.fromWei(web3.eth.getBalance(account), 'ether').toNumber());
+        return Math.round(Number(web3.fromWei(web3.eth.getBalance(account), 'ether')));
     }
 }
 
 const currency = {
     getEtherFromWei(wei){
-        return web3.fromWei(wei, 'ether').toNumber();
+        return Number(web3.fromWei(wei, 'ether'));
     }
 }
 

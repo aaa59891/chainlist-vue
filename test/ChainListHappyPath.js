@@ -20,7 +20,7 @@ contract('ChainList', async(accounts) => {
         let count = await ins.getArticlesCount()
         let sellIds = await ins.getSellArticleIds()
 
-        assert.equal(count.toNumber(), 0, 'the article count should be 0')
+        assert.equal(Number(count), 0, 'the article count should be 0')
         assert.equal(sellIds.length, 0, 'the sell ids array sohuld be empty')
     })
 
@@ -95,7 +95,7 @@ contract('ChainList', async(accounts) => {
 
         assert.equal(result.logs.length, 1, 'buy a article should emit a event.')
         assert.equal(log.event, 'LogBuyArticle', 'event should be LogBuyArticle')
-        assert.equal(log.args._id.toNumber(), id, `the seller should be ${id}`)
+        assert.equal(Number(log.args._id), id, `the seller should be ${id}`)
         assert.equal(log.args._seller, seller.account, `the seller should be ${seller.account}`)
         assert.equal(log.args._buyer, buyer.account, `the buyer should be ${buyer.account}`)
         assert.equal(log.args._name, article.name, `the name should be ${article.name}`)

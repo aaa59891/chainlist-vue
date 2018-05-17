@@ -42,12 +42,12 @@ const actions = {
             let articlesArr = await Promise.all(sellIds.map((id) => ins.articles(Number(id))))
             commit(types.ARTICLE_MUTATE_ARTICLES, articlesArr.reduce((pre, cur) => {
                 const article = new Article(
-                    cur[0].toNumber(),
+                    Number(cur[0]),
                     cur[1],
                     cur[2],
                     cur[3],
                     cur[4],
-                    web3.fromWei(cur[5], 'ether').toNumber(),
+                    Number(web3.fromWei(cur[5], 'ether')),
                     false,
                 )
                 pre[article.id] = article

@@ -27,12 +27,12 @@ function setChainListWatches(instance) {
         }
         const {args} = log
         app.$store.commit(types.ARTICLE_MUTATE_ADD_ARTICLE, new Article(
-            args._id.toNumber(),
+            Number(args._id),
             args._seller,
             0x0,
             args._name,
             args._description,
-            web3.fromWei(args._price, 'ether').toNumber(),
+            Number(web3.fromWei(args._price, 'ether')),
             false
         ))
     });
@@ -44,6 +44,6 @@ function setChainListWatches(instance) {
         }
         app.$store.commit(types.ARTICLE_MUTATE_REMOVE_ARTICLE, log.args._id)
         app.$store.dispatch(types.ACCOUNT_ACT_GETETHER);
-        app.$store.commit(types.ARTICLE_MUTATE_BUYING, {id: log.args._id.toNumber(), buying:false});
+        app.$store.commit(types.ARTICLE_MUTATE_BUYING, {id: Number(log.args._id), buying:false});
     })
 }
