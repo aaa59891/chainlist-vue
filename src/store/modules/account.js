@@ -23,7 +23,7 @@ const actions = {
                     reject(err)
                     return
                 }
-                Number(commit(types.ACCOUNT_MUTATE_ETHER, web3.fromWei(balance, 'ether')))
+                commit(types.ACCOUNT_MUTATE_ETHER, Number(web3.fromWei(balance, 'ether')))
                 resolve()
             })
         });
