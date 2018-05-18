@@ -49,7 +49,7 @@
             appArticle: Article
         },
         beforeCreate(){
-            this.$store.dispatch(types.ARTICLE_ACT_LOADARTICLE)
+            this.$store.dispatch(types.ARTICLE_ACT_LOADARTICLE, this.$chainList)
         }
     }
 

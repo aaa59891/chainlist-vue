@@ -1,5 +1,4 @@
 import * as types from '../types.js'
-import {getChainListInstance} from '../../setup.js'
 import Article from '../../models/article.js'
 
 const state = {
@@ -35,11 +34,10 @@ const mutations = {
 }
 
 const actions = {
-    [types.ARTICLE_ACT_LOADARTICLE]:  async ({commit}) => {
+    [types.ARTICLE_ACT_LOADARTICLE]:  async ({commit}, chainListInstance) => {
         try{
-            const ins = await getChainListInstance()
-            const sellIds = await ins.getSellArticleIds()
-            let articlesArr = await Promise.all(sellIds.map((id) => ins.articles(Number(id))))
+            const sellIds = await chainListInstance.getSellArticleIds()
+            let articlesArr = await Promise.all(sellIds.map((id) => chainListInstance.articles(Number(id))))
             commit(types.ARTICLE_MUTATE_ARTICLES, articlesArr.reduce((pre, cur) => {
                 const article = new Article(
                     Number(cur[0]),

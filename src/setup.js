@@ -18,6 +18,12 @@ export const getChainListInstance = () => {
             .then((ins) => {
                 resolve(ins)
             })
-            .catch(reject)
+            .catch((err) => {
+                console.error(err)
+                if(String(err).indexOf('has not been deployed') !== -1){
+                    alert('This dapp has not deployed in this network, please change a network!')
+                }
+                reject(err)
+            })
     });
 }
