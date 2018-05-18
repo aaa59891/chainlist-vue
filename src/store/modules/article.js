@@ -36,6 +36,9 @@ const mutations = {
 const actions = {
     [types.ARTICLE_ACT_LOADARTICLE]:  async ({commit}, chainListInstance) => {
         try{
+            if(!chainListInstance){
+                return;
+            }
             const sellIds = await chainListInstance.getSellArticleIds()
             let articlesArr = await Promise.all(sellIds.map((id) => chainListInstance.articles(Number(id))))
             commit(types.ARTICLE_MUTATE_ARTICLES, articlesArr.reduce((pre, cur) => {
